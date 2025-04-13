@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TravelBuddy - Your Ultimate Travel Companion</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        header {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/api/placeholder/1200/600');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+        
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0066ff;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #0066ff;
+        }
+        
+        .cta-button {
+            background-color: #0066ff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color: #0052cc;
+            transform: translateY(-2px);
+        }
+        
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .search-bar {
+            display: flex;
+            background-color: white;
+            border-radius: 50px;
+            padding: 5px;
+            width: 60%;
+            max-width: 800px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .search-bar input {
+            flex: 1;
+            border: none;
+            padding: 15px 20px;
+            font-size: 16px;
+            border-radius: 50px;
+            outline: none;
+        }
+        
+        .destinations {
+            padding: 80px 50px;
+            text-align: center;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 4px;
+            background-color: #0066ff;
+            bottom: -10px;
+            left: 25%;
+        }
+        
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .destination-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .destination-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .card-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .card-description {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0066ff;
+            margin-bottom: 15px;
+        }
+        
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        
+        .footer-links li {
+            margin: 0 15px;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .social-icons {
+            margin-bottom: 20px;
+        }
+        
+        .social-icons a {
+            color: white;
+            margin: 0 10px;
+            font-size: 20px;
+        }
+        
+        /* Chatbot styles */
+        .chatbot-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #0066ff;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .chatbot-toggle:hover {
+            transform: scale(1.1);
+        }
+        
+        .chatbot-container {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            height: 450px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .chatbot-header {
+            background-color: #0066ff;
+            color: white;
+            padding: 15px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .close-chat {
+            cursor: pointer;
+            font-size: 20px;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            max-width: 80%;
+        }
+        
+        .bot {
+            align-self: flex-start;
+            background-color: #f1f1f1;
+            padding: 10px 15px;
+            border-radius: 15px 15px 15px 0;
+        }
+        
+        .user {
+            align-self: flex-end;
+            background-color: #0066ff;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 15px 15px 0 15px;
+            margin-left: auto;
+        }
+        
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 10px;
+            border-radius: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .send-button {
+            background-color: #0066ff;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .search-bar {
+                width: 90%;
+            }
+            
+            .destinations {
+                padding: 50px 20px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .chatbot-container {
+                width: 300px;
+                height: 400px;
+                bottom: 80px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">TravelBuddy</div>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Destinations</a></li>
+            <li><a href="#">Deals</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <button class="cta-button">Book Now</button>
+    </nav>
+
+    <header>
+        <h1>Discover the World</h1>
+        <p class="subtitle">Find your perfect destination with TravelBuddy</p>
+        <div class="search-bar">
+            <input type="text" placeholder="Where would you like to go?">
+            <button class="cta-button">Search</button>
+        </div>
+    </header>
+
+    <section class="destinations">
+        <h2 class="section-title">Popular Destinations</h2>
+        <div class="destinations-grid">
+            <div class="destination-card">
+                <img src="/api/placeholder/400/320" alt="Bali" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">Bali, Indonesia</h3>
+                    <p class="card-description">Experience paradise on Earth with stunning beaches and rich culture.</p>
+                    <p class="price">From $899</p>
+                    <button class="cta-button">View Details</button>
+                </div>
+            </div>
+            <div class="destination-card">
+                <img src="/api/placeholder/400/320" alt="Paris" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">Paris, France</h3>
+                    <p class="card-description">Explore the city of love with its iconic landmarks and cuisine.</p>
+                    <p class="price">From $1,099</p>
+                    <button class="cta-button">View Details</button>
+                </div>
+            </div>
+            <div class="destination-card">
+                <img src="/api/placeholder/400/320" alt="Tokyo" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">Tokyo, Japan</h3>
+                    <p class="card-description">Immerse yourself in a blend of traditional culture and modern technology.</p>
+                    <p class="price">From $1,299</p>
+                    <button class="cta-button">View Details</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <ul class="footer-links">
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Support</a></li>
+        </ul>
+        <div class="social-icons">
+            <a href="#">Facebook</a>
+            <a href="#">Twitter</a>
+            <a href="#">Instagram</a>
+            <a href="#">YouTube</a>
+        </div>
+        <p>&copy; 2025 TravelBuddy. All rights reserved.</p>
+    </footer>
+
+    <!-- Chatbot -->
+    <div class="chatbot-toggle" id="chatbot-toggle">
+        <span>💬</span>
+    </div>
+    
+    <div class="chatbot-container" id="chatbot-container">
+        <div class="chatbot-header">
+            <span>TravelBuddy Assistant</span>
+            <span class="close-chat" id="close-chat">×</span>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="message bot">
+                Hi there! I'm TravelBuddy, your personal travel assistant. How can I help you plan your next adventure?
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Type your question here...">
+            <button class="send-button" id="send-button">➤</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatbotToggle = document.getElementById('chatbot-toggle');
+            const chatbotContainer = document.getElementById('chatbot-container');
+            const closeChat = document.getElementById('close-chat');
+            const chatMessages = document.getElementById('chat-messages');
+            const userInput = document.getElementById('user-input');
+            const sendButton = document.getElementById('send-button');
+            
+            // Chatbot toggle hover effect
+            chatbotToggle.addEventListener('mouseover', function() {
+                chatbotContainer.style.display = 'flex';
+            });
+            
+            // Close chat button
+            closeChat.addEventListener('click', function() {
+                chatbotContainer.style.display = 'none';
+            });
+            
+            // Function to add a message to the chat
+            function addMessage(message, isUser) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message');
+                messageDiv.classList.add(isUser ? 'user' : 'bot');
+                messageDiv.textContent = message;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            // Function to get response from the chatbot
+            // In a real implementation, this would connect to your LangChain backend
+            function getBotResponse(userMessage) {
+                // Sample responses based on keywords
+                const responses = {
+                    'hello': 'Hello! How can I help with your travel plans?',
+                    'hi': 'Hi there! Looking to plan a trip?',
+                    'destination': 'We have many popular destinations! Are you interested in beaches, mountains, or city experiences?',
+                    'price': 'Our packages start from $899. Do you have a specific budget in mind?',
+                    'book': 'Great! To book, you can use our "Book Now" button or I can help you with the process. What destination are you interested in?',
+                    'deal': 'We currently have special deals on trips to Bali, Paris, and Tokyo. Would you like more information?',
+                    'flight': 'We can arrange flights from most major airports. Where will you be departing from?',
+                    'hotel': 'We partner with 4 and 5-star hotels to ensure your comfort. Do you have any specific preferences?',
+                    'weather': 'I can provide weather information for your destination. Which location are you inquiring about?',
+                    'covid': 'Travel restrictions vary by country. I can help you find the latest COVID-19 travel requirements for your destination.',
+                    'thank': 'You\'re welcome! Is there anything else I can help you with?'
+                };
+                
+                // Default response if no keyword matches
+                let botResponse = "I'm here to help with your travel needs. Could you tell me more about what you're looking for?";
+                
+                // Check for keyword matches
+                const lowerUserMessage = userMessage.toLowerCase();
+                for (const keyword in responses) {
+                    if (lowerUserMessage.includes(keyword)) {
+                        botResponse = responses[keyword];
+                        break;
+                    }
+                }
+                
+                // Simulate API delay
+                setTimeout(() => {
+                    addMessage(botResponse, false);
+                }, 600);
+            }
+            
+            // Send message when button is clicked
+            sendButton.addEventListener('click', function() {
+                const message = userInput.value.trim();
+                if (message !== '') {
+                    addMessage(message, true);
+                    userInput.value = '';
+                    getBotResponse(message);
+                }
+            });
+            
+            // Send message when Enter key is pressed
+            userInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const message = userInput.value.trim();
+                    if (message !== '') {
+                        addMessage(message, true);
+                        userInput.value = '';
+                        getBotResponse(message);
+                    }
+                }
+            });
+            
+            // Create a sticky nav effect
+            window.addEventListener('scroll', function() {
+                const nav = document.querySelector('nav');
+                nav.classList.toggle('sticky', window.scrollY > 0);
+            });
+        });
+    </script>
+</body>
+</html>
