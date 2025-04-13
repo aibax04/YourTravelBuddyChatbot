@@ -1,5 +1,5 @@
 flask
 sentence-transformers
-pinecone-client
+pinecone
 python-dotenv
 gunicorn
