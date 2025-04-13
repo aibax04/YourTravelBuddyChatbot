@@ -41,18 +41,4 @@ def query():
 if __name__ == "__main__":
     app.run(debug=True)
 
-from flask import Flask, request, jsonify
-from flask_cors import CORS  # Import CORS
 
-app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
-
-@app.route("/")
-def home():
-    return "Backend is live!"
-
-@app.route("/api/chat", methods=["POST"])
-def chat():
-    data = request.get_json()
-    # your chatbot logic here
-    return jsonify({"response": "Hello from backend!"})
